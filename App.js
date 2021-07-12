@@ -1,33 +1,40 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { Button, StyleSheet, Text, View } from 'react-native';
+import { EasybaseProvider, useEasybase } from "easybase-react";
+import ebconfig from "./ebconfig";
+import { Connexion } from './connexion';
+
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <View style={styles.entree}>
-        <TextInput style={styles.input} placeholder="Adresse électronique"/>
-        <TextInput style={{ borderWidth: 1, paddingHorizontal: 34 }} placeholder="Mot de passe"/>
-        <Button title="Entrée"/>
-      </View>
-      <StatusBar style="auto" />
-    </View>
+    <EasybaseProvider ebconfig={ebconfig}>
+      <Accueil />
+    </EasybaseProvider>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    width: "auto"
-  },
-  entree: {
-    flex: 2,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  input: {
-    marginVertical: 35,
-    borderWidth: 1,
-    paddingHorizontal: 34
-  }
-});
+function Accueil () {
+  const { isUserSignedIn, signOut, db } = useEasybase();
+  const [table, setTable] = useState([]);
+
+  {/*useEffect(() => {
+    db("MOT DE PASSE", true).return().limit(20).all()
+    .then(data => setTable(data));
+  }, [])*/}
+
+  return (
+    isUserSignedIn() ?
+    <View>
+      <Text style={{ marginTop: 30 }}>Bienvenue !</Text>
+      <Button title="Déconnexion" onPress={signOut} />
+      <Text>Voici un tableau !</Text>
+      {table.map(ele => 
+        <Text>{ele.pseudo}</Text>
+      )}
+    </View>
+      :
+    <Connexion />
+  )
+}
+
+
