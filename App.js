@@ -4,6 +4,7 @@ import { EasybaseProvider, useEasybase } from "easybase-react";
 import { DataTable } from 'react-native-paper';
 import ebconfig from "./ebconfig";
 import { Connexion } from './connexion';
+import Table from './table'
 
 
 export default function App() {
@@ -15,38 +16,8 @@ export default function App() {
 }
 
 function Home () {
-  const { isUserSignedIn, signOut, db } = useEasybase();
-  const [table, setTable] = useState([]);
-
-  const tablePassword = async() => {
-    const data = await db("MOT DE PASSE").return().limit(10).all();
-    setTable(data);
-  }
-
-  useEffect(() => {
-    tablePassword();
-  }, []);
-
-
-  const createPassword = async() => {
-    try {
-      const websiteInp = Alert.prompt("Le site web");
-      const BackOfficeInp = Alert.prompt("Le back office");
-      const LoginInp = Alert.prompt("Le login");
-      const PasswordInp = Alert.prompt("Le mot de passe");
-      if(!websiteInp || !BackOfficeInp ||!LoginInp || !PasswordInp) return;
-
-      await db("MOT DE PASSE").insert({
-        website: websiteInp,
-        backoffice: BackOfficeInp,
-        login: LoginInp,
-        password: PasswordInp
-      }).one();
-      tablePassword();
-    } catch (_) {
-      alert("Erreur Insertion");
-    }
-  }
+  const { isUserSignedIn, signOut, userID } = useEasybase();
+  const user = userID();
 
   return (
     isUserSignedIn() ?
@@ -54,24 +25,8 @@ function Home () {
       <View style={styles.row}>
         <Button title="Déconnexion" onPress={signOut} />
       </View>
-      <Text style={{ marginTop: 30 }}>Bienvenue</Text>
-        <DataTable style={{ marginBottom: 45}}>
-          <DataTable.Header>
-            <DataTable.Title>Site Web</DataTable.Title>
-            <DataTable.Title>Back Office</DataTable.Title>
-            <DataTable.Title>Login</DataTable.Title>
-            <DataTable.Title>Mot de passe</DataTable.Title>
-          </DataTable.Header>
-          {table.map(dn => 
-            <DataTable.Row>
-            <DataTable.Cell>{dn.website}</DataTable.Cell>
-            <DataTable.Cell>{dn.backoffice}</DataTable.Cell>
-            <DataTable.Cell>{dn.login}</DataTable.Cell>
-            <DataTable.Cell>{dn.password}</DataTable.Cell>
-          </DataTable.Row>  
-          )}
-        </DataTable>
-      <Button title="Créer un mot de passe" onPress={createPassword} />
+      <Text style={{ marginTop: 30 }}>Bienvenue {user}</Text>
+      <Table user={user}/>
     </View>
       :
     <Connexion />
