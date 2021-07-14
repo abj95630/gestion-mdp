@@ -1,36 +1,48 @@
-import React, { useState } from 'react';
-import { Alert, Button, Pressable, StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import { Alert, Button, StyleSheet, View } from 'react-native';
 import { DataTable } from 'react-native-paper';
 
+{/* Composant pour le tableau */}
 function Table({ user }) {
-    const [table, setTable] = useState({});
-    let tableData = []
+    {/*let table = [
+        {
+            user : { 
+                website : "parisbasketball.paris",
+                back_office : "parisbasketball.paris/back",
+                identifiant : "sakina",
+                mot_de_passe : "1233445"
+            }
+        }
+    ];*/}
 
     return (
-        <View>
-            <DataTable style={{ marginBottom: 45}}>
-            <DataTable.Header>
-                <DataTable.Title>SW</DataTable.Title>
-                <DataTable.Title>BO</DataTable.Title>
-                <DataTable.Title>LG</DataTable.Title>
-                <DataTable.Title>MDP</DataTable.Title>
-            </DataTable.Header>
-            {tableData.map(dn => 
+        <View style={styles.view}>
+            <DataTable>
+                <DataTable.Header>
+                    <DataTable.Title>WS</DataTable.Title>
+                    <DataTable.Title>BO</DataTable.Title>
+                    <DataTable.Title>LG</DataTable.Title>
+                    <DataTable.Title>MDP</DataTable.Title>
+                </DataTable.Header>
+                {/*table.map(dn => 
                 <DataTable.Row>
-                <DataTable.Cell>{dn.user.website}</DataTable.Cell>
-                <DataTable.Cell>{dn.backoffice}</DataTable.Cell>
-                <DataTable.Cell>{dn.login}</DataTable.Cell>
-                <DataTable.Cell>{dn.password}</DataTable.Cell>
-                <DataTable.Cell>
-                    <Pressable>X</Pressable>
-                    <Pressable>M</Pressable>
-                </DataTable.Cell>
-            </DataTable.Row> 
-            )}
+                    <DataTable.Cell>{dn.website}</DataTable.Cell>
+                    <DataTable.Cell>{dn}</DataTable.Cell>
+                    <DataTable.Cell>{dn}</DataTable.Cell>
+                    <DataTable.Cell>{dn}</DataTable.Cell>
+                </DataTable.Row> 
+                )*/}
             </DataTable>
-            <Button title="Créer un mot de passe" onPress={createPassword} />
+        <Button title="Créer un mot de passe" onPress={() => Alert.alert("🚧 En construction ! 🚧")}/>
         </View>
     );
 }
 
 export default Table
+
+
+const styles = StyleSheet.create({
+    view : {
+        backgroundColor : "yellow"
+    }
+})

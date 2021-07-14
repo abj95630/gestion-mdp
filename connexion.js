@@ -2,6 +2,8 @@ import { useEasybase } from 'easybase-react';
 import React, { useState } from 'react';
 import { Button, StyleSheet, TextInput, View } from 'react-native';
 
+
+{/* Voici l'écran de connexion  */}
 export function Connexion() {
     const [mailAdress, SetMailAdress] = useState("");
     const [password, SetPassword] = useState("");
@@ -16,6 +18,7 @@ export function Connexion() {
       SetPassword("");
     }
 
+    {/* On saisie les deux champs pour se connecter avec le bouton d'entrée */}
     return (
     <View style={styles.container}>
       <View style={styles.entree}>
@@ -41,7 +44,8 @@ export function Connexion() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: "auto"
+    width: "auto",
+    backgroundColor : "yellow"
   },
   entree: {
     flex: 2,
